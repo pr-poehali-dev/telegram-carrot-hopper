@@ -15,6 +15,7 @@ const CarrotCatchGame = () => {
   const [rabbitX, setRabbitX] = useState(50);
   const [carrots, setCarrots] = useState<Carrot[]>([]);
   const [speed, setSpeed] = useState(0.8);
+  const [isJumping, setIsJumping] = useState(false);
   const gameAreaRef = useRef<HTMLDivElement>(null);
   const carrotIdRef = useRef(0);
   const animationRef = useRef<number>();
@@ -65,6 +66,8 @@ const CarrotCatchGame = () => {
               if (distance < 8) {
                 setScore((prev) => prev + 1);
                 setSpeed((prev) => Math.min(prev + 0.05, 3));
+                setIsJumping(true);
+                setTimeout(() => setIsJumping(false), 300);
                 return false;
               }
             }
@@ -183,7 +186,7 @@ const CarrotCatchGame = () => {
       {carrots.map((carrot) => (
         <img
           key={carrot.id}
-          src="https://cdn.poehali.dev/projects/a1f7d45a-95df-4bc5-b706-40d58218c7df/files/de535ef9-f54b-4935-a31c-b4b9a476fd1a.jpg"
+          src="https://cdn.poehali.dev/projects/a1f7d45a-95df-4bc5-b706-40d58218c7df/files/71e6b90f-b826-4c85-ade0-a31c01615aad.jpg"
           alt="Carrot"
           className="absolute transition-transform"
           style={{
@@ -192,40 +195,53 @@ const CarrotCatchGame = () => {
             transform: 'translate(-50%, -50%)',
             width: '60px',
             height: 'auto',
+            mixBlendMode: 'multiply'
           }}
         />
       ))}
 
       <img
-        src="https://cdn.poehali.dev/projects/a1f7d45a-95df-4bc5-b706-40d58218c7df/files/370c52b8-fd5c-4eca-97e2-d69782b3bd62.jpg"
+        src="https://cdn.poehali.dev/projects/a1f7d45a-95df-4bc5-b706-40d58218c7df/files/4bb8a550-1507-4fb5-992c-f73cad0366e9.jpg"
         alt="Rabbit"
-        className="absolute transition-all duration-200 ease-out"
+        className={`absolute transition-all duration-200 ease-out ${isJumping ? 'animate-bounce' : ''}`}
         style={{
           left: `${rabbitX}%`,
-          bottom: '12%',
+          bottom: isJumping ? '18%' : '12%',
           transform: 'translateX(-50%)',
           width: '140px',
           height: 'auto',
-          filter: 'drop-shadow(0 6px 12px rgba(0,0,0,0.3))'
+          filter: 'drop-shadow(0 6px 12px rgba(0,0,0,0.3))',
+          mixBlendMode: 'multiply',
+          transition: 'bottom 0.3s ease-out'
         }}
       />
 
+      <div className="absolute top-1/3 left-8 w-24 h-32 bg-[#8B4513] rounded-t-full"></div>
+      <div className="absolute top-1/4 left-6 w-32 h-24 bg-[#228B22] rounded-full opacity-80"></div>
+      
+      <div className="absolute top-1/2 right-16 w-20 h-28 bg-[#8B4513] rounded-t-full"></div>
+      <div className="absolute top-1/2 right-12 w-28 h-20 bg-[#228B22] rounded-full opacity-80"></div>
+      
+      <div className="absolute top-2/3 left-1/4 w-16 h-24 bg-[#8B4513] rounded-t-full"></div>
+      <div className="absolute top-2/3 left-1/4 -ml-2 w-24 h-18 bg-[#228B22] rounded-full opacity-80"></div>
+      
       <div className="absolute bottom-0 w-full">
         <div className="w-full h-32 bg-[#78B159] rounded-t-[50%] relative">
           <div className="absolute -top-8 left-0 w-full flex justify-around">
-            <div className="w-16 h-20 bg-[#5C9940] rounded-t-full"></div>
-            <div className="w-12 h-16 bg-[#5C9940] rounded-t-full"></div>
-            <div className="w-20 h-24 bg-[#5C9940] rounded-t-full"></div>
-            <div className="w-14 h-18 bg-[#5C9940] rounded-t-full"></div>
-            <div className="w-16 h-20 bg-[#5C9940] rounded-t-full"></div>
-            <div className="w-12 h-16 bg-[#5C9940] rounded-t-full"></div>
+            <div className="w-16 h-20 bg-[#5C9940] rounded-t-full shadow-lg"></div>
+            <div className="w-12 h-16 bg-[#5C9940] rounded-t-full shadow-md"></div>
+            <div className="w-20 h-24 bg-[#5C9940] rounded-t-full shadow-lg"></div>
+            <div className="w-14 h-18 bg-[#5C9940] rounded-t-full shadow-md"></div>
+            <div className="w-16 h-20 bg-[#5C9940] rounded-t-full shadow-lg"></div>
+            <div className="w-12 h-16 bg-[#5C9940] rounded-t-full shadow-md"></div>
           </div>
-          <div className="absolute top-4 left-0 w-full flex justify-around opacity-60">
-            <div className="w-8 h-8 bg-yellow-400 rounded-full"></div>
-            <div className="w-6 h-6 bg-pink-400 rounded-full"></div>
-            <div className="w-8 h-8 bg-red-400 rounded-full"></div>
-            <div className="w-6 h-6 bg-yellow-400 rounded-full"></div>
-            <div className="w-8 h-8 bg-pink-400 rounded-full"></div>
+          <div className="absolute top-4 left-0 w-full flex justify-around">
+            <div className="w-8 h-8 bg-yellow-400 rounded-full shadow-md"></div>
+            <div className="w-6 h-6 bg-pink-400 rounded-full shadow-sm"></div>
+            <div className="w-8 h-8 bg-red-400 rounded-full shadow-md"></div>
+            <div className="w-6 h-6 bg-yellow-400 rounded-full shadow-sm"></div>
+            <div className="w-8 h-8 bg-pink-400 rounded-full shadow-md"></div>
+            <div className="w-7 h-7 bg-purple-400 rounded-full shadow-sm"></div>
           </div>
         </div>
       </div>
