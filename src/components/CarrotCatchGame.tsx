@@ -104,43 +104,57 @@ const CarrotCatchGame = () => {
 
   if (gameState === 'menu') {
     return (
-      <div className="h-screen w-full bg-gradient-to-b from-sky-300 via-sky-200 to-green-200 flex flex-col items-center justify-center p-4">
-        <div className="text-center space-y-8 max-w-md">
-          <div className="text-8xl animate-bounce">🐰</div>
-          <h1 className="text-5xl font-bold text-orange-600 drop-shadow-lg">
+      <div className="h-screen w-full bg-gradient-to-b from-[#87CEEB] to-[#98D982] flex flex-col items-center justify-center p-4 relative overflow-hidden">
+        <div className="absolute top-10 right-10 w-24 h-24 bg-yellow-300 rounded-full shadow-lg"></div>
+        <div className="absolute top-20 left-16 w-32 h-20 bg-white rounded-full opacity-80"></div>
+        <div className="absolute top-32 right-32 w-24 h-16 bg-white rounded-full opacity-70"></div>
+        
+        <div className="text-center space-y-8 max-w-md relative z-10">
+          <img 
+            src="https://cdn.poehali.dev/projects/a1f7d45a-95df-4bc5-b706-40d58218c7df/files/370c52b8-fd5c-4eca-97e2-d69782b3bd62.jpg"
+            alt="Rabbit"
+            className="w-48 h-48 mx-auto animate-bounce"
+          />
+          <h1 className="text-5xl font-bold text-[#FF6B35] drop-shadow-lg" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
             Заяц ловит морковку
           </h1>
-          <p className="text-xl text-gray-700">
+          <p className="text-xl text-gray-800 font-semibold">
             Управляй зайцем и лови падающую морковь!
           </p>
           <Button
             onClick={startGame}
             size="lg"
-            className="text-2xl py-8 px-12 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-full shadow-2xl transform hover:scale-105 transition-transform"
+            className="text-2xl py-8 px-12 bg-[#FF6B35] hover:bg-[#FF8C61] text-white font-bold rounded-full shadow-2xl transform hover:scale-105 transition-transform border-4 border-[#FF4500]"
           >
-            🎮 Начать игру
+            ▶ Начать игру
           </Button>
         </div>
+        
+        <div className="absolute bottom-0 w-full h-24 bg-[#78B159] rounded-t-[50%]"></div>
       </div>
     );
   }
 
   if (gameState === 'gameover') {
     return (
-      <div className="h-screen w-full bg-gradient-to-b from-purple-400 via-pink-300 to-orange-200 flex flex-col items-center justify-center p-4">
-        <div className="text-center space-y-8 max-w-md bg-white/90 p-8 rounded-3xl shadow-2xl">
-          <div className="text-7xl">😢</div>
-          <h2 className="text-4xl font-bold text-gray-800">Игра окончена!</h2>
-          <div className="bg-yellow-100 py-6 px-8 rounded-2xl border-4 border-yellow-400">
-            <p className="text-2xl text-gray-600 mb-2">Твой счёт:</p>
-            <p className="text-6xl font-bold text-orange-600">{score}</p>
+      <div className="h-screen w-full bg-gradient-to-b from-[#FFB6C1] to-[#FFA07A] flex flex-col items-center justify-center p-4">
+        <div className="text-center space-y-8 max-w-md bg-white p-8 rounded-3xl shadow-2xl border-8 border-[#FF69B4]">
+          <img 
+            src="https://cdn.poehali.dev/projects/a1f7d45a-95df-4bc5-b706-40d58218c7df/files/370c52b8-fd5c-4eca-97e2-d69782b3bd62.jpg"
+            alt="Rabbit"
+            className="w-32 h-32 mx-auto opacity-60"
+          />
+          <h2 className="text-4xl font-bold text-gray-800" style={{ fontFamily: 'Comic Sans MS, cursive' }}>Игра окончена!</h2>
+          <div className="bg-[#FFE66D] py-6 px-8 rounded-3xl border-4 border-[#FFC700] shadow-lg">
+            <p className="text-2xl text-gray-700 mb-2 font-bold">Твой счёт:</p>
+            <p className="text-6xl font-bold text-[#FF6B35]">{score}</p>
           </div>
           <Button
             onClick={restartGame}
             size="lg"
-            className="text-2xl py-8 px-12 bg-green-500 hover:bg-green-600 text-white font-bold rounded-full shadow-2xl transform hover:scale-105 transition-transform"
+            className="text-2xl py-8 px-12 bg-[#4ECDC4] hover:bg-[#45B7AF] text-white font-bold rounded-full shadow-2xl transform hover:scale-105 transition-transform border-4 border-[#3BA99E]"
           >
-            🔄 Играть снова
+            ↻ Играть снова
           </Button>
         </div>
       </div>
@@ -150,60 +164,69 @@ const CarrotCatchGame = () => {
   return (
     <div
       ref={gameAreaRef}
-      className="h-screen w-full bg-gradient-to-b from-sky-400 via-sky-300 to-green-300 relative overflow-hidden select-none cursor-none"
+      className="h-screen w-full bg-gradient-to-b from-[#87CEEB] to-[#98D982] relative overflow-hidden select-none cursor-none"
       onMouseMove={handleMouseMove}
       onTouchMove={handleTouchMove}
     >
-      <div className="absolute top-8 right-8 text-7xl animate-float">☀️</div>
+      <div className="absolute top-10 right-10 w-24 h-24 bg-yellow-300 rounded-full shadow-lg animate-float"></div>
       
-      <div className="absolute top-16 left-12 text-5xl animate-float" style={{ animationDelay: '0.5s' }}>☁️</div>
-      <div className="absolute top-24 right-24 text-4xl animate-float" style={{ animationDelay: '1s' }}>☁️</div>
-      <div className="absolute top-32 left-1/3 text-6xl animate-float" style={{ animationDelay: '1.5s' }}>☁️</div>
+      <div className="absolute top-20 left-16 w-32 h-20 bg-white rounded-full opacity-80 animate-float" style={{ animationDelay: '0.5s' }}></div>
+      <div className="absolute top-32 right-32 w-24 h-16 bg-white rounded-full opacity-70 animate-float" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-40 left-1/3 w-28 h-18 bg-white rounded-full opacity-75 animate-float" style={{ animationDelay: '1.5s' }}></div>
 
-      <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-white/90 px-8 py-4 rounded-full shadow-xl z-10">
-        <p className="text-3xl font-bold text-orange-600">
-          🥕 Счёт: {score}
+      <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-white px-8 py-4 rounded-full shadow-xl z-10 border-4 border-[#FF6B35]">
+        <p className="text-3xl font-bold text-[#FF6B35]" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+          Счёт: {score}
         </p>
       </div>
 
       {carrots.map((carrot) => (
-        <div
+        <img
           key={carrot.id}
-          className="absolute text-6xl transition-transform"
+          src="https://cdn.poehali.dev/projects/a1f7d45a-95df-4bc5-b706-40d58218c7df/files/de535ef9-f54b-4935-a31c-b4b9a476fd1a.jpg"
+          alt="Carrot"
+          className="absolute transition-transform"
           style={{
             left: `${carrot.x}%`,
             top: `${carrot.y}%`,
-            transform: 'translate(-50%, -50%) rotate(15deg)',
+            transform: 'translate(-50%, -50%)',
+            width: '60px',
+            height: 'auto',
           }}
-        >
-          🥕
-        </div>
+        />
       ))}
 
       <img
-        src="https://cdn.poehali.dev/projects/a1f7d45a-95df-4bc5-b706-40d58218c7df/files/e1bf0a03-daa1-49b4-bcff-5db353abf1e5.jpg"
+        src="https://cdn.poehali.dev/projects/a1f7d45a-95df-4bc5-b706-40d58218c7df/files/370c52b8-fd5c-4eca-97e2-d69782b3bd62.jpg"
         alt="Rabbit"
         className="absolute transition-all duration-200 ease-out"
         style={{
           left: `${rabbitX}%`,
-          bottom: '8%',
+          bottom: '12%',
           transform: 'translateX(-50%)',
-          width: '120px',
+          width: '140px',
           height: 'auto',
-          filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))'
+          filter: 'drop-shadow(0 6px 12px rgba(0,0,0,0.3))'
         }}
       />
 
-      <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-green-600 to-transparent">
-        <div className="absolute bottom-0 w-full flex justify-around text-4xl">
-          <span>🌾</span>
-          <span>🌿</span>
-          <span>🌾</span>
-          <span>🌻</span>
-          <span>🌿</span>
-          <span>🌾</span>
-          <span>🌻</span>
-          <span>🌿</span>
+      <div className="absolute bottom-0 w-full">
+        <div className="w-full h-32 bg-[#78B159] rounded-t-[50%] relative">
+          <div className="absolute -top-8 left-0 w-full flex justify-around">
+            <div className="w-16 h-20 bg-[#5C9940] rounded-t-full"></div>
+            <div className="w-12 h-16 bg-[#5C9940] rounded-t-full"></div>
+            <div className="w-20 h-24 bg-[#5C9940] rounded-t-full"></div>
+            <div className="w-14 h-18 bg-[#5C9940] rounded-t-full"></div>
+            <div className="w-16 h-20 bg-[#5C9940] rounded-t-full"></div>
+            <div className="w-12 h-16 bg-[#5C9940] rounded-t-full"></div>
+          </div>
+          <div className="absolute top-4 left-0 w-full flex justify-around opacity-60">
+            <div className="w-8 h-8 bg-yellow-400 rounded-full"></div>
+            <div className="w-6 h-6 bg-pink-400 rounded-full"></div>
+            <div className="w-8 h-8 bg-red-400 rounded-full"></div>
+            <div className="w-6 h-6 bg-yellow-400 rounded-full"></div>
+            <div className="w-8 h-8 bg-pink-400 rounded-full"></div>
+          </div>
         </div>
       </div>
     </div>
