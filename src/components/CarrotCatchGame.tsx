@@ -14,7 +14,7 @@ const CarrotCatchGame = () => {
   const [score, setScore] = useState(0);
   const [rabbitX, setRabbitX] = useState(50);
   const [carrots, setCarrots] = useState<Carrot[]>([]);
-  const [speed, setSpeed] = useState(2);
+  const [speed, setSpeed] = useState(0.8);
   const gameAreaRef = useRef<HTMLDivElement>(null);
   const carrotIdRef = useRef(0);
   const animationRef = useRef<number>();
@@ -24,7 +24,7 @@ const CarrotCatchGame = () => {
     setScore(0);
     setRabbitX(50);
     setCarrots([]);
-    setSpeed(2);
+    setSpeed(0.8);
     carrotIdRef.current = 0;
   };
 
@@ -64,7 +64,7 @@ const CarrotCatchGame = () => {
               const distance = Math.abs(carrot.x - rabbitX);
               if (distance < 8) {
                 setScore((prev) => prev + 1);
-                setSpeed((prev) => Math.min(prev + 0.1, 8));
+                setSpeed((prev) => Math.min(prev + 0.05, 3));
                 return false;
               }
             }
@@ -90,14 +90,16 @@ const CarrotCatchGame = () => {
     if (gameState !== 'playing' || !gameAreaRef.current) return;
     const rect = gameAreaRef.current.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
-    setRabbitX(Math.max(5, Math.min(95, x)));
+    const targetX = Math.max(5, Math.min(95, x));
+    setRabbitX((prev) => prev + (targetX - prev) * 0.15);
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     if (gameState !== 'playing' || !gameAreaRef.current) return;
     const rect = gameAreaRef.current.getBoundingClientRect();
     const x = ((e.touches[0].clientX - rect.left) / rect.width) * 100;
-    setRabbitX(Math.max(5, Math.min(95, x)));
+    const targetX = Math.max(5, Math.min(95, x));
+    setRabbitX((prev) => prev + (targetX - prev) * 0.15);
   };
 
   if (gameState === 'menu') {
@@ -152,6 +154,12 @@ const CarrotCatchGame = () => {
       onMouseMove={handleMouseMove}
       onTouchMove={handleTouchMove}
     >
+      <div className="absolute top-8 right-8 text-7xl animate-float">☀️</div>
+      
+      <div className="absolute top-16 left-12 text-5xl animate-float" style={{ animationDelay: '0.5s' }}>☁️</div>
+      <div className="absolute top-24 right-24 text-4xl animate-float" style={{ animationDelay: '1s' }}>☁️</div>
+      <div className="absolute top-32 left-1/3 text-6xl animate-float" style={{ animationDelay: '1.5s' }}>☁️</div>
+
       <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-white/90 px-8 py-4 rounded-full shadow-xl z-10">
         <p className="text-3xl font-bold text-orange-600">
           🥕 Счёт: {score}
@@ -172,18 +180,32 @@ const CarrotCatchGame = () => {
         </div>
       ))}
 
-      <div
-        className="absolute text-8xl transition-all duration-100 ease-linear"
+      <img
+        src="https://cdn.poehali.dev/projects/a1f7d45a-95df-4bc5-b706-40d58218c7df/files/e1bf0a03-daa1-49b4-bcff-5db353abf1e5.jpg"
+        alt="Rabbit"
+        className="absolute transition-all duration-200 ease-out"
         style={{
           left: `${rabbitX}%`,
-          bottom: '10%',
+          bottom: '8%',
           transform: 'translateX(-50%)',
+          width: '120px',
+          height: 'auto',
+          filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))'
         }}
-      >
-        🐰
-      </div>
+      />
 
-      <div className="absolute bottom-0 w-full h-20 bg-gradient-to-t from-green-600 to-transparent"></div>
+      <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-green-600 to-transparent">
+        <div className="absolute bottom-0 w-full flex justify-around text-4xl">
+          <span>🌾</span>
+          <span>🌿</span>
+          <span>🌾</span>
+          <span>🌻</span>
+          <span>🌿</span>
+          <span>🌾</span>
+          <span>🌻</span>
+          <span>🌿</span>
+        </div>
+      </div>
     </div>
   );
 };
